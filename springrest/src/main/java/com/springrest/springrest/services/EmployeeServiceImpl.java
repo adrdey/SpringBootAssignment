@@ -1,8 +1,10 @@
 package com.springrest.springrest.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.springrest.springrest.dao.EmployeeDao;
@@ -23,22 +25,23 @@ public class EmployeeServiceImpl implements EmployeeService {
 			return employeeDao.findAll();
 	}
 	@Override
-	public Employee getEmployee(int empId) {
+	public Optional<Employee> getEmployee(int empId) {
 
-		return employeeDao.getOne(empId);
+		return employeeDao.findById(empId);
+				
 	}
 	
 	@Override
-	public Employee addEmployee(Employee emp) {
+	public void addEmployee(Employee emp) {
 		
 
-		return employeeDao.save(emp);
+		 employeeDao.save(emp);
 	}
 	
 	@Override
-	public Employee updateEmployee(Employee emp) {
+	public void updateEmployee(Employee emp) {
 		
-		return employeeDao.save(emp);
+		 employeeDao.save(emp);
 	}
 	
 	@Override

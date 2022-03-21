@@ -2,20 +2,36 @@ package com.springrest.springrest.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.springframework.lang.NonNull;
 
 @Entity
 public class Employee {
 	
 	@Id
+	@NonNull
 private int empId;
+	@NonNull
+
 private String empName;
+	@NonNull
+
 private String empBand;
+	@NonNull
+
 private String designation;
+	@Email
+	@NotBlank
 private String email;
+
+	@NonNull
 private int phNo;
 public Employee() {
 	super();
-	// TODO Auto-generated constructor stub
+	
 }
 public Employee(int empId, String empName, String empBand, String designation, String email, int phNo) {
 	super();

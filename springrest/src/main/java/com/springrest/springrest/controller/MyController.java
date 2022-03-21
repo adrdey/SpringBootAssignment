@@ -1,8 +1,12 @@
 package com.springrest.springrest.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,22 +36,35 @@ private EmployeeService employeeService;
 	}
 	
 	@GetMapping("/get/{empId}")
-	public Employee getEmployee(@PathVariable int empId){
+	public Optional<Employee> getEmployee(@PathVariable int empId){
 		return this.employeeService.getEmployee(empId);
+				
 	}
 	
 	@PostMapping("/add")
-	public Employee addEmployee(@RequestBody Employee emp){
-		return this.employeeService.addEmployee(emp);
+	public ResponseEntity<HttpStatus> addEmployee(@RequestBody Employee emp){
+		
+		try {
+			this.employeeService.addEmployee(emp);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
 	@PutMapping("/update")
-	public Employee updateEmployee(@RequestBody Employee emp){
-		return this.employeeService.updateEmployee(emp);
+	public ResponseEntity<HttpStatus> updateEmployee(@RequestBody Employee emp){
+		
+		try {
+			this.employeeService.updateEmployee(emp);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 	
-	@DeleteMapping("/delete")
-	public ResponseEntity<HttpStatus> deleteEmployee(@RequestParam int empId){
+	@DeleteMapping("/delete/{empId}")
+	public ResponseEntity<HttpStatus> deleteEmployee(@PathVariable int empId){
 		try {
 			 this.employeeService.deleteEmployee(empId);
 			return new ResponseEntity<>(HttpStatus.OK);
